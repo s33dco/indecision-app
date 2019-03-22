@@ -2,11 +2,9 @@
 
 console.log('app.js is running');
 
-// JSX - Javascript XML
-
 var app = {
     title: 'Indecision App.',
-    subTitle: 'Make up your mind.',
+    subTitle: 'Make up your mind up time.',
     options: []
 };
 
@@ -42,9 +40,13 @@ var reset = function reset() {
     renderApp();
 };
 
-var appRoot = document.getElementById('app');
+var onMakeDecision = function onMakeDecision() {
+    var randomNum = Math.floor(Math.random() * app.options.length);
+    var option = app.options[randomNum];
+    alert(option);
+};
 
-var numbers = [55, 67, 78];
+var appRoot = document.getElementById('app');
 
 var renderApp = function renderApp() {
     var template = React.createElement(
@@ -66,6 +68,16 @@ var renderApp = function renderApp() {
             app.options && app.options.length > 0 ? 'Here are your options :' : 'No options available!'
         ),
         React.createElement(
+            'button',
+            { disabled: app.options.length === 0, onClick: onMakeDecision },
+            'What should I do?'
+        ),
+        React.createElement(
+            'button',
+            { disabled: app.options.length === 0, onClick: reset },
+            'Reset'
+        ),
+        React.createElement(
             'ol',
             null,
             app.options.map(function (option, index) {
@@ -84,11 +96,6 @@ var renderApp = function renderApp() {
                 'button',
                 null,
                 'Add Option'
-            ),
-            app.options.length > 0 && React.createElement(
-                'button',
-                { onClick: reset },
-                'Reset'
             )
         )
     );

@@ -1,10 +1,8 @@
 console.log('app.js is running');
 
-// JSX - Javascript XML
-
 const app = {
     title: 'Indecision App.',
-    subTitle: 'Make up your mind.',
+    subTitle: 'Make up your mind up time.',
     options: []
 };
 
@@ -35,9 +33,13 @@ const reset = () => {
     renderApp();
 };
 
-const appRoot = document.getElementById('app');
+const onMakeDecision = () => {
+    const randomNum = Math.floor(Math.random() * app.options.length);
+    const option = app.options[randomNum];
+    alert(option);
+};
 
-const numbers = [55,67,78]
+const appRoot = document.getElementById('app');
 
 const renderApp = () => {
     const template =(
@@ -45,16 +47,16 @@ const renderApp = () => {
             <h1>{app.title}</h1>
             { app.subTitle && <p>{app.subTitle}</p>}
             <p>{(app.options && app.options.length > 0) ? 'Here are your options :' : 'No options available!'}</p>
+            <button disabled={app.options.length === 0} onClick={onMakeDecision}>What should I do?</button>
+            <button disabled={app.options.length === 0} onClick={reset}>Reset</button>
             
             <ol>
             { app.options.map((option, index) => <li key={index}>{option}</li>) }           
             </ol>
 
-
             <form onSubmit={onFormSubmit}>
                 <input type='text' name='option' autoFocus/>
                 <button>Add Option</button>
-                {app.options.length > 0 && <button onClick={reset}>Reset</button>}
             </form>
         </div>
     );
