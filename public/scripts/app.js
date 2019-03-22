@@ -63,7 +63,7 @@ var renderApp = function renderApp() {
         React.createElement(
             'p',
             null,
-            app.options && app.options.length > 0 ? 'Here are your options ' : 'No options'
+            app.options && app.options.length > 0 ? 'Here are your options :' : 'No options available!'
         ),
         React.createElement(
             'ol',
@@ -85,7 +85,7 @@ var renderApp = function renderApp() {
                 null,
                 'Add Option'
             ),
-            React.createElement(
+            app.options.length > 0 && React.createElement(
                 'button',
                 { onClick: reset },
                 'Reset'

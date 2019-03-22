@@ -44,7 +44,7 @@ const renderApp = () => {
         <div>
             <h1>{app.title}</h1>
             { app.subTitle && <p>{app.subTitle}</p>}
-            <p>{(app.options && app.options.length > 0) ? 'Here are your options ' : 'No options'}</p>
+            <p>{(app.options && app.options.length > 0) ? 'Here are your options :' : 'No options available!'}</p>
             
             <ol>
             { app.options.map((option, index) => <li key={index}>{option}</li>) }           
@@ -54,7 +54,7 @@ const renderApp = () => {
             <form onSubmit={onFormSubmit}>
                 <input type='text' name='option' autoFocus/>
                 <button>Add Option</button>
-                <button onClick={reset}>Reset</button>
+                {app.options.length > 0 && <button onClick={reset}>Reset</button>}
             </form>
         </div>
     );
