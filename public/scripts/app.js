@@ -7,42 +7,8 @@ console.log('app.js is running');
 var app = {
     title: 'Indecision App.',
     subTitle: 'Make up your mind.',
-    options: ['Option One', 'Option Two']
+    options: []
 };
-
-var template = React.createElement(
-    'div',
-    null,
-    React.createElement(
-        'h1',
-        null,
-        app.title
-    ),
-    app.subTitle && React.createElement(
-        'p',
-        null,
-        app.subTitle
-    ),
-    React.createElement(
-        'p',
-        null,
-        app.options && app.options.length > 0 ? 'Here are your options' : 'No options'
-    ),
-    React.createElement(
-        'ol',
-        null,
-        React.createElement(
-            'li',
-            null,
-            'Item One'
-        ),
-        React.createElement(
-            'li',
-            null,
-            'Item two'
-        )
-    )
-);
 
 var user = {
     name: "Sir Loveton Supreme",
@@ -59,90 +25,75 @@ function getLocation(location) {
             location
         );
     }
-}
-
-var count = 0;
-
-var addOne = function addOne() {
-    count++;
-    renderCounterApp();
 };
-var minusOne = function minusOne() {
-    count--;
-    renderCounterApp();
+
+var onFormSubmit = function onFormSubmit(e) {
+    e.preventDefault();
+    var option = e.target.elements.option.value;
+    if (option) {
+        app.options.push(option);
+        e.target.elements.option.value = '';
+        renderApp();
+    }
 };
 
 var reset = function reset() {
-    count = 0;
-    renderCounterApp();
+    app.options = [];
+    renderApp();
 };
-
-var templateTwo = React.createElement(
-    'div',
-    null,
-    React.createElement(
-        'h1',
-        null,
-        'Count : ',
-        count
-    ),
-    React.createElement(
-        'button',
-        { onClick: addOne },
-        '+1'
-    ),
-    React.createElement(
-        'button',
-        { onClick: minusOne },
-        '-1'
-    ),
-    React.createElement(
-        'button',
-        { onClick: reset },
-        'reset'
-    )
-);
 
 var appRoot = document.getElementById('app');
 
-var renderCounterApp = function renderCounterApp() {
-    var templateTwo = React.createElement(
+var numbers = [55, 67, 78];
+
+var renderApp = function renderApp() {
+    var template = React.createElement(
         'div',
         null,
         React.createElement(
             'h1',
             null,
-            'Count : ',
-            count
+            app.title
+        ),
+        app.subTitle && React.createElement(
+            'p',
+            null,
+            app.subTitle
         ),
         React.createElement(
-            'button',
-            { onClick: addOne },
-            '+1'
+            'p',
+            null,
+            app.options && app.options.length > 0 ? 'Here are your options ' : 'No options'
         ),
         React.createElement(
-            'button',
-            { onClick: minusOne },
-            '-1'
+            'ol',
+            null,
+            app.options.map(function (option, index) {
+                return React.createElement(
+                    'li',
+                    { key: index },
+                    option
+                );
+            })
         ),
         React.createElement(
-            'button',
-            { onClick: reset },
-            'reset'
+            'form',
+            { onSubmit: onFormSubmit },
+            React.createElement('input', { type: 'text', name: 'option', autoFocus: true }),
+            React.createElement(
+                'button',
+                null,
+                'Add Option'
+            ),
+            React.createElement(
+                'button',
+                { onClick: reset },
+                'Reset'
+            )
         )
     );
 
-    ReactDOM.render(templateTwo, appRoot);
+    ReactDOM.render(template, appRoot);
 };
 
-renderCounterApp();
-
-// const multiplier = {
-//     numbers : [12, 24,26,57,78,345],
-//     multiplyBy: 13,
-//     multiply(){
-//         return this.numbers.map((number)=> number * this.multiplyBy);
-//     }
-// }
-
-// console.log(multiplier.multiply());
+renderApp();

@@ -5,86 +5,61 @@ console.log('app.js is running');
 const app = {
     title: 'Indecision App.',
     subTitle: 'Make up your mind.',
-    options: ['Option One', 'Option Two']
-}
-
-const template =(
-    <div>
-        <h1>{app.title}</h1>
-        { app.subTitle && <p>{app.subTitle}</p>}
-        <p>{(app.options && app.options.length > 0) ? 'Here are your options' : 'No options'}</p>
-        <ol>
-            <li>Item One</li>
-            <li>Item two</li>
-        </ol>
-    </div>
-);
+    options: []
+};
 
 const user = {
     name : "Sir Loveton Supreme",
     age : 48,
     location: 'Brighton'
-}
+};
 
 function getLocation(location) {
     if (location){
         return <p>Location : {location}</p>;
     }
-}
+};
 
-
-let count = 0
-
-const addOne = () => {
-    count++;
-    renderCounterApp();
-} 
-const minusOne = () => {
-    count--;
-    renderCounterApp();
-} 
+const onFormSubmit = (e) => {
+    e.preventDefault();
+    const option = e.target.elements.option.value;
+    if (option) {
+        app.options.push(option);
+        e.target.elements.option.value = '';
+        renderApp();
+    }
+};
 
 const reset = () => {
-    count = 0;
-    renderCounterApp();
-} 
-
-const templateTwo = (
-    <div>
-        <h1>Count : {count}</h1>
-        <button onClick={addOne}>+1</button>
-        <button onClick={minusOne}>-1</button>
-        <button onClick={reset}>reset</button>
-    </div>
-);
+    app.options = [];
+    renderApp();
+};
 
 const appRoot = document.getElementById('app');
 
+const numbers = [55,67,78]
 
-
-const renderCounterApp = () => {
-    const templateTwo = (
+const renderApp = () => {
+    const template =(
         <div>
-            <h1>Count : {count}</h1>
-            <button onClick={addOne}>+1</button>
-            <button onClick={minusOne}>-1</button>
-            <button onClick={reset}>reset</button>
+            <h1>{app.title}</h1>
+            { app.subTitle && <p>{app.subTitle}</p>}
+            <p>{(app.options && app.options.length > 0) ? 'Here are your options ' : 'No options'}</p>
+            
+            <ol>
+            { app.options.map((option, index) => <li key={index}>{option}</li>) }           
+            </ol>
+
+
+            <form onSubmit={onFormSubmit}>
+                <input type='text' name='option' autoFocus/>
+                <button>Add Option</button>
+                <button onClick={reset}>Reset</button>
+            </form>
         </div>
     );
 
-    ReactDOM.render(templateTwo,appRoot);
-    
-}
+    ReactDOM.render(template, appRoot);
+};
 
-
-renderCounterApp();
-
-// const multiplier = {
-//     numbers : [12, 24,26,57,78,345],
-//     multiplyBy: 13,
-//     multiply(){
-//         return this.numbers.map((number)=> number * this.multiplyBy);
-//     }
-// }
-
-// console.log(multiplier.multiply());
+renderApp();
