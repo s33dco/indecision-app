@@ -5,14 +5,14 @@ class IndecisionApp extends React.Component {
 
         const title = "Indecision";
         const subTitle = "Put you life in the hands of a computer";
-        const options = ['Thing One', 'Thing two', 'Thing Three', 'Thing Four', 'Thing five'];
+        const options = ['Thing One','Thing five'];
 
         return (
             <div>
                 <Header title={title} subTitle={subTitle}/>
                 <Action />
                 <Options options={options}/>
-                <AddOptions />
+                <AddOptions options={options}/>
             </div>
         );
     }
@@ -30,22 +30,33 @@ class Header extends React.Component {
 }
 
 class Action extends React.Component {
+    handlePick(){
+        alert('handlePick')
+    }
     render(){
         return (
             <div>
-                <button>What should I do?</button>
+                <button onClick={this.handlePick}>What should I do?</button>
             </div>
         );
     }
 }
 
 class Options extends React.Component {
+    constructor(props){
+        super(props);
+        this.removeAll = this.removeAll.bind(this);
+    }
+    removeAll(){
+        alert(this.props.options);
+    }
     render(){
         return (
             <div>
             <p>You have {this.props.options.length} options :</p>
+            <button onClick={this.removeAll}>Remove All</button>
                 <ol>
-                { this.props.options.map((option, index) => <Option key={index} optionText={option} />) } 
+                {this.props.options.map((option, index) => <Option key={index} optionText={option} />) } 
                 </ol>
             </div>
         );
@@ -61,11 +72,18 @@ class Option extends React.Component {
 }
 
 class AddOptions extends React.Component {
+    addOption(e){
+        e.preventDefault();
+        const option = e.target.elements.option.value.trim();
+        if (option) {
+            alert(option)
+        }
+    }
     render(){
         return (
-            <form>
+            <form onSubmit={this.addOption}>
                 <input type='text' name='option' autoFocus/>
-                <button>Add Option</button>
+                <button >Add Option</button>
             </form> 
         );
     }
