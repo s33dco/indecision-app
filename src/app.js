@@ -64,58 +64,117 @@ class IndecisionApp extends React.Component {
     }
 }
 
-class Header extends React.Component {
-    render(){
-        return (
-            <div>
-                <h1>{this.props.title}</h1>
-                <h2>{this.props.subTitle}</h2>
-            </div>
-        );
-    }
+// stateless functional component
+
+const Header = (props) => {
+    return (
+        <div>
+            <h1>{props.title}</h1>
+            <h2>{props.subTitle}</h2>
+        </div>
+    );
 }
 
-class Action extends React.Component {
-    render(){
-        return (
-            <div>
-                <button 
-                    onClick={this.props.handlePick}
-                    disabled={!this.props.hasOptions}
-                >
-                    What should I do?
-                </button>
-            </div>
-        );
-    }
-}
 
-class Options extends React.Component {
-    render(){
-        return (
-            <div>
-            <p>{this.props.hasOptions ? `You have ${this.props.options.length} options:` : 'There are no available options'}</p>
+// class based component
+// class Header extends React.Component {
+//     render(){
+//         return (
+//             <div>
+//                 <h1>{this.props.title}</h1>
+//                 <h2>{this.props.subTitle}</h2>
+//             </div>
+//         );
+//     }
+// }
+
+// stateless functional component
+
+const Action = (props) => {
+    return (
+        <div>
             <button 
-                onClick={this.props.handleDeleteOptions}
-                disabled={!this.props.hasOptions}
+                onClick={props.handlePick}
+                disabled={!props.hasOptions}
             >
-                Remove All
+                What should I do?
             </button>
-                <ol>
-                {this.props.options.map((option, index) => <Option key={index} optionText={option} />) } 
-                </ol>
-            </div>
-        );
-    }
+        </div>
+    );   
 }
 
-class Option extends React.Component {
-    render(){
-        return (
-            <li>{this.props.optionText}</li>
-        );
-    }
+
+// class based component
+
+// const Action extends React.Component {
+//     render(){
+//         return (
+//             <div>
+//                 <button 
+//                     onClick={this.props.handlePick}
+//                     disabled={!this.props.hasOptions}
+//                 >
+//                     What should I do?
+//                 </button>
+//             </div>
+//         );
+//     }
+// }
+
+
+
+const Options = (props) => {
+    return (
+        <div>
+        <p>{props.hasOptions ? `You have ${props.options.length} options:` : 'There are no available options'}</p>
+        <button 
+            onClick={props.handleDeleteOptions}
+            disabled={!props.hasOptions}
+        >
+            Remove All
+        </button>
+            <ol>
+            {props.options.map((option, index) => <Option key={index} optionText={option} />) } 
+            </ol>
+        </div>
+    );   
 }
+
+
+// class Options extends React.Component {
+//     render(){
+//         return (
+//             <div>
+//             <p>{this.props.hasOptions ? `You have ${this.props.options.length} options:` : 'There are no available options'}</p>
+//             <button 
+//                 onClick={this.props.handleDeleteOptions}
+//                 disabled={!this.props.hasOptions}
+//             >
+//                 Remove All
+//             </button>
+//                 <ol>
+//                 {this.props.options.map((option, index) => <Option key={index} optionText={option} />) } 
+//                 </ol>
+//             </div>
+//         );
+//     }
+// }
+
+
+const Option = (props) => {
+    return (
+        <li>{props.optionText}</li>
+    );   
+}
+
+
+// class Option extends React.Component {
+//     render(){
+//         return (
+//             <li>{this.props.optionText}</li>
+//         );
+//     }
+// }
 
 class AddOption extends React.Component {
     constructor(props){
@@ -147,5 +206,18 @@ class AddOption extends React.Component {
         );
     }
 }
+
+
+// stateless functional component, no access to this, props first arguement
+
+// const User = (props) => {
+//     return (
+//         <div>
+//             <p>Name: {props.name}</p>
+//             <p>Age: {props.age}</p>
+//         </div>
+//     )
+// };
+
 
 ReactDOM.render(<IndecisionApp />, document.getElementById('app'));
