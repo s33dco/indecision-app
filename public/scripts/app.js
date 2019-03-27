@@ -30,14 +30,29 @@ var IndecisionApp = function (_React$Component) {
         key: 'componentDidMount',
         value: function componentDidMount() {
             // fires when loaded
-            console.log('component did mount');
+            try {
+                var json = localStorage.getItem('options'); // array from localStorage
+                var options = JSON.parse(json); // parse to object
+                if (options) {
+                    this.setState(function () {
+                        return { options: options };
+                    }); // set state
+                }
+                console.log('component did mount');
+            } catch (e) {
+                console.log('invalid json data in localStorage - using default empty array');
+            }
         }
     }, {
         key: 'componentDidUpdate',
         value: function componentDidUpdate(prevProps, prevState) {
             // fires after props or state change
-            console.log('component did update');
-            console.log('was { ' + prevState.options + ' } now { ' + this.state.options + ' }');
+            if (prevState.options.length !== this.state.options.length) {
+                console.log('component did update');
+                console.log('was { ' + prevState.options + ' } now { ' + this.state.options + ' }');
+                var json = JSON.stringify(this.state.options); //  stringify
+                localStorage.setItem('options', json); // save to localStorage
+            }
         }
     }, {
         key: 'componentWillUnmount',
@@ -227,6 +242,10 @@ var AddOption = function (_React$Component2) {
             this.setState(function () {
                 return { error: error };
             });
+
+            if (!error) {
+                e.target.elements.option.value = ''; // clear input if no error
+            }
         }
     }, {
         key: 'render',
