@@ -27,8 +27,29 @@ var IndecisionApp = function (_React$Component) {
     }
 
     _createClass(IndecisionApp, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            // fires when loaded
+            console.log('component did mount');
+        }
+    }, {
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate(prevProps, prevState) {
+            // fires after props or state change
+            console.log('component did update');
+            console.log('was { ' + prevState.options + ' } now { ' + this.state.options + ' }');
+        }
+    }, {
+        key: 'componentWillUnmount',
+        value: function componentWillUnmount() {
+            console.log('component did unmount');
+        }
+    }, {
         key: 'handleDeleteOptions',
         value: function handleDeleteOptions() {
+            this.setState(function () {
+                return { options: [] };
+            });
             // this.setState(()=>{
             //     return {
             //         options : []
@@ -37,10 +58,6 @@ var IndecisionApp = function (_React$Component) {
 
             // same as below via implicit return
             // setState implicit return syntax
-
-            this.setState(function () {
-                return { options: [] };
-            });
         }
     }, {
         key: 'handleDeleteOption',
@@ -78,7 +95,6 @@ var IndecisionApp = function (_React$Component) {
         key: 'render',
         value: function render() {
             var subTitle = "Put you life in the hands of a computer";
-
             return React.createElement(
                 'div',
                 null,
@@ -105,9 +121,8 @@ var IndecisionApp = function (_React$Component) {
 
 IndecisionApp.defaultProps = {
     options: []
-    // stateless functional component
-
-};var Header = function Header(props) {
+};
+var Header = function Header(props) {
     return React.createElement(
         'div',
         null,
@@ -123,25 +138,10 @@ IndecisionApp.defaultProps = {
         )
     );
 };
-
 Header.defaultProps = {
     title: 'Indecision'
-
-    // class based component
-    // class Header extends React.Component {
-    //     render(){
-    //         return (
-    //             <div>
-    //                 <h1>{this.props.title}</h1>
-    //                 <h2>{this.props.subTitle}</h2>
-    //             </div>
-    //         );
-    //     }
-    // }
-
-    // stateless functional component
-
-};var Action = function Action(props) {
+};
+var Action = function Action(props) {
     return React.createElement(
         'div',
         null,
@@ -155,25 +155,6 @@ Header.defaultProps = {
         )
     );
 };
-
-// class based component
-
-// const Action extends React.Component {
-//     render(){
-//         return (
-//             <div>
-//                 <button 
-//                     onClick={this.props.handlePick}
-//                     disabled={!this.props.hasOptions}
-//                 >
-//                     What should I do?
-//                 </button>
-//             </div>
-//         );
-//     }
-// }
-
-
 var Options = function Options(props) {
     return React.createElement(
         'div',
@@ -194,37 +175,16 @@ var Options = function Options(props) {
         React.createElement(
             'ol',
             null,
-            props.options.map(function (option, index) {
+            props.options.map(function (option) {
                 return React.createElement(Option, {
-                    key: index,
-                    optionText: option,
+                    key: option // unique key for React
+                    , optionText: option,
                     handleDeleteOption: props.handleDeleteOption
                 });
             })
         )
     );
 };
-
-// class Options extends React.Component {
-//     render(){
-//         return (
-//             <div>
-//             <p>{this.props.hasOptions ? `You have ${this.props.options.length} options:` : 'There are no available options'}</p>
-//             <button 
-//                 onClick={this.props.handleDeleteOptions}
-//                 disabled={!this.props.hasOptions}
-//             >
-//                 Remove All
-//             </button>
-//                 <ol>
-//                 {this.props.options.map((option, index) => <Option key={index} optionText={option} />) } 
-//                 </ol>
-//             </div>
-//         );
-//     }
-// }
-
-
 var Option = function Option(props) {
     return React.createElement(
         'li',
@@ -234,7 +194,7 @@ var Option = function Option(props) {
             'button',
             {
                 onClick: function onClick(e) {
-                    // pass in arrow function called with e arguement
+                    // pass in arrow function called with event arguement
                     props.handleDeleteOption(props.optionText); // to pass option value up to handleDeleteOption
                 }
             },
@@ -242,14 +202,6 @@ var Option = function Option(props) {
         )
     );
 };
-
-// class Option extends React.Component {
-//     render(){
-//         return (
-//             <li>{this.props.optionText}</li>
-//         );
-//     }
-// }
 
 var AddOption = function (_React$Component2) {
     _inherits(AddOption, _React$Component2);
@@ -303,17 +255,5 @@ var AddOption = function (_React$Component2) {
 
     return AddOption;
 }(React.Component);
-
-// stateless functional component, no access to this, props first arguement
-
-// const User = (props) => {
-//     return (
-//         <div>
-//             <p>Name: {props.name}</p>
-//             <p>Age: {props.age}</p>
-//         </div>
-//     )
-// };
-
 
 ReactDOM.render(React.createElement(IndecisionApp, null), document.getElementById('app'));

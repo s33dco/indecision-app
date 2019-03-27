@@ -1,5 +1,3 @@
-
-
 class IndecisionApp extends React.Component {
 
     constructor(props){
@@ -13,7 +11,21 @@ class IndecisionApp extends React.Component {
         };
     }
 
+    componentDidMount(){    // fires when loaded
+        console.log('component did mount') 
+    }
+
+    componentDidUpdate(prevProps, prevState){   // fires after props or state change
+        console.log('component did update')
+        console.log(`was { ${prevState.options} } now { ${this.state.options} }`)
+    }
+
+    componentWillUnmount(){
+        console.log('component did unmount')
+    }
+
     handleDeleteOptions(){
+        this.setState(() => ({options : []}))
         // this.setState(()=>{
         //     return {
         //         options : []
@@ -22,8 +34,6 @@ class IndecisionApp extends React.Component {
 
         // same as below via implicit return
         // setState implicit return syntax
-
-        this.setState(() => ({options : []}))
     }
 
     handleDeleteOption(optionToRemove){
@@ -51,7 +61,6 @@ class IndecisionApp extends React.Component {
 
     render(){
         const subTitle = "Put you life in the hands of a computer";
-
         return (
             <div>
                 <Header subTitle={subTitle}/>
@@ -72,12 +81,9 @@ class IndecisionApp extends React.Component {
         );
     }
 }
-
 IndecisionApp.defaultProps = {
     options: []
 }
-// stateless functional component
-
 const Header = (props) => {
     return (
         <div>
@@ -86,25 +92,9 @@ const Header = (props) => {
         </div>
     );
 }
-
 Header.defaultProps = {
     title: 'Indecision'
 }
-
-// class based component
-// class Header extends React.Component {
-//     render(){
-//         return (
-//             <div>
-//                 <h1>{this.props.title}</h1>
-//                 <h2>{this.props.subTitle}</h2>
-//             </div>
-//         );
-//     }
-// }
-
-// stateless functional component
-
 const Action = (props) => {
     return (
         <div>
@@ -117,27 +107,6 @@ const Action = (props) => {
         </div>
     );   
 }
-
-
-// class based component
-
-// const Action extends React.Component {
-//     render(){
-//         return (
-//             <div>
-//                 <button 
-//                     onClick={this.props.handlePick}
-//                     disabled={!this.props.hasOptions}
-//                 >
-//                     What should I do?
-//                 </button>
-//             </div>
-//         );
-//     }
-// }
-
-
-
 const Options = (props) => {
     return (
         <div>
@@ -150,9 +119,9 @@ const Options = (props) => {
         </button>
             <ol>
                 {
-                    props.options.map((option, index) => (
+                    props.options.map((option) => (
                         <Option 
-                            key={index} 
+                            key={option}                // unique key for React
                             optionText={option}
                             handleDeleteOption={props.handleDeleteOption}
                         />
@@ -162,34 +131,12 @@ const Options = (props) => {
         </div>
     );   
 }
-
-
-// class Options extends React.Component {
-//     render(){
-//         return (
-//             <div>
-//             <p>{this.props.hasOptions ? `You have ${this.props.options.length} options:` : 'There are no available options'}</p>
-//             <button 
-//                 onClick={this.props.handleDeleteOptions}
-//                 disabled={!this.props.hasOptions}
-//             >
-//                 Remove All
-//             </button>
-//                 <ol>
-//                 {this.props.options.map((option, index) => <Option key={index} optionText={option} />) } 
-//                 </ol>
-//             </div>
-//         );
-//     }
-// }
-
-
 const Option = (props) => {
     return (
         <li>
             {props.optionText}
             <button             
-                onClick={(e)=>{                                 // pass in arrow function called with e arguement
+                onClick={(e)=>{                                 // pass in arrow function called with event arguement
                     props.handleDeleteOption(props.optionText); // to pass option value up to handleDeleteOption
                 }}
             >
@@ -198,16 +145,6 @@ const Option = (props) => {
         </li>
     );   
 }
-
-
-// class Option extends React.Component {
-//     render(){
-//         return (
-//             <li>{this.props.optionText}</li>
-//         );
-//     }
-// }
-
 class AddOption extends React.Component {
     constructor(props){
         super(props);
@@ -234,18 +171,4 @@ class AddOption extends React.Component {
         );
     }
 }
-
-
-// stateless functional component, no access to this, props first arguement
-
-// const User = (props) => {
-//     return (
-//         <div>
-//             <p>Name: {props.name}</p>
-//             <p>Age: {props.age}</p>
-//         </div>
-//     )
-// };
-
-
 ReactDOM.render(<IndecisionApp />, document.getElementById('app'));
