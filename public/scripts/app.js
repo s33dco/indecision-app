@@ -19,6 +19,7 @@ var IndecisionApp = function (_React$Component) {
         _this.handleDeleteOptions = _this.handleDeleteOptions.bind(_this);
         _this.handlePick = _this.handlePick.bind(_this);
         _this.handleAddOption = _this.handleAddOption.bind(_this);
+        _this.handleDeleteOption = _this.handleDeleteOption.bind(_this);
         _this.state = {
             options: props.options
         };
@@ -28,9 +29,27 @@ var IndecisionApp = function (_React$Component) {
     _createClass(IndecisionApp, [{
         key: 'handleDeleteOptions',
         value: function handleDeleteOptions() {
+            // this.setState(()=>{
+            //     return {
+            //         options : []
+            //     };
+            // });
+
+            // same as below via implicit return
+            // setState implicit return syntax
+
             this.setState(function () {
+                return { options: [] };
+            });
+        }
+    }, {
+        key: 'handleDeleteOption',
+        value: function handleDeleteOption(optionToRemove) {
+            this.setState(function (prevState) {
                 return {
-                    options: []
+                    options: prevState.options.filter(function (option) {
+                        return optionToRemove !== option;
+                    })
                 };
             });
         }
@@ -49,13 +68,11 @@ var IndecisionApp = function (_React$Component) {
             } else if (this.state.options.indexOf(option) > -1) {
                 return 'this option already exists';
             }
-
             this.setState(function (prevState) {
-                return {
-                    options: prevState.options.concat(option) // https://stackoverflow.com/questions/44572026/difference-between-concat-and-push
-                    // push directly manipulates and throws an error, don't mess with state compute it.
-                };
+                return { options: prevState.options.concat(option) };
             });
+            // https://stackoverflow.com/questions/44572026/difference-between-concat-and-push
+            // push directly manipulates and throws an error, don't mess with state compute it.
         }
     }, {
         key: 'render',
@@ -73,6 +90,7 @@ var IndecisionApp = function (_React$Component) {
                 React.createElement(Options, {
                     options: this.state.options,
                     handleDeleteOptions: this.handleDeleteOptions,
+                    handleDeleteOption: this.handleDeleteOption,
                     hasOptions: this.state.options.length > 0
                 }),
                 React.createElement(AddOption, {
@@ -177,7 +195,11 @@ var Options = function Options(props) {
             'ol',
             null,
             props.options.map(function (option, index) {
-                return React.createElement(Option, { key: index, optionText: option });
+                return React.createElement(Option, {
+                    key: index,
+                    optionText: option,
+                    handleDeleteOption: props.handleDeleteOption
+                });
             })
         )
     );
@@ -207,7 +229,17 @@ var Option = function Option(props) {
     return React.createElement(
         'li',
         null,
-        props.optionText
+        props.optionText,
+        React.createElement(
+            'button',
+            {
+                onClick: function onClick(e) {
+                    // pass in arrow function called with e arguement
+                    props.handleDeleteOption(props.optionText); // to pass option value up to handleDeleteOption
+                }
+            },
+            'Remove'
+        )
     );
 };
 
@@ -240,7 +272,6 @@ var AddOption = function (_React$Component2) {
             e.preventDefault();
             var option = e.target.elements.option.value.trim();
             var error = this.props.handleAddOption(option);
-
             this.setState(function () {
                 return { error: error };
             });
@@ -285,4 +316,4 @@ var AddOption = function (_React$Component2) {
 // };
 
 
-ReactDOM.render(React.createElement(IndecisionApp, { options: ['Jolly Brewer', 'The Railway'] }), document.getElementById('app'));
+ReactDOM.render(React.createElement(IndecisionApp, null), document.getElementById('app'));

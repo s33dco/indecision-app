@@ -7,17 +7,29 @@ class IndecisionApp extends React.Component {
         this.handleDeleteOptions = this.handleDeleteOptions.bind(this);
         this.handlePick = this.handlePick.bind(this);
         this.handleAddOption = this.handleAddOption.bind(this);
+        this.handleDeleteOption = this.handleDeleteOption.bind(this);
         this.state = {
             options: props.options
         };
     }
 
     handleDeleteOptions(){
-        this.setState(()=>{
-            return {
-                options : []
-            };
-        });
+        // this.setState(()=>{
+        //     return {
+        //         options : []
+        //     };
+        // });
+
+        // same as below via implicit return
+        // setState implicit return syntax
+
+        this.setState(() => ({options : []}))
+    }
+
+    handleDeleteOption(optionToRemove){
+        this.setState((prevState) => ({
+            options : prevState.options.filter((option) => optionToRemove !== option )
+        }));
     }
 
     handlePick(){
@@ -32,12 +44,9 @@ class IndecisionApp extends React.Component {
         } else if(this.state.options.indexOf(option) > -1){
             return 'this option already exists'
         }
-
-        this.setState((prevState)=>{
-           return {
-               options : prevState.options.concat(option)   // https://stackoverflow.com/questions/44572026/difference-between-concat-and-push
-            }                                                // push directly manipulates and throws an error, don't mess with state compute it.
-        })
+        this.setState((prevState)=>({options : prevState.options.concat(option)}));
+        // https://stackoverflow.com/questions/44572026/difference-between-concat-and-push
+        // push directly manipulates and throws an error, don't mess with state compute it.
     }
 
     render(){
@@ -53,6 +62,7 @@ class IndecisionApp extends React.Component {
                 <Options 
                     options={this.state.options} 
                     handleDeleteOptions={this.handleDeleteOptions}
+                    handleDeleteOption={this.handleDeleteOption}
                     hasOptions={this.state.options.length > 0}
                 />
                 <AddOption 
@@ -139,7 +149,15 @@ const Options = (props) => {
             Remove All
         </button>
             <ol>
-            {props.options.map((option, index) => <Option key={index} optionText={option} />) } 
+                {
+                    props.options.map((option, index) => (
+                        <Option 
+                            key={index} 
+                            optionText={option}
+                            handleDeleteOption={props.handleDeleteOption}
+                        />
+                    )) 
+                } 
             </ol>
         </div>
     );   
@@ -168,7 +186,16 @@ const Options = (props) => {
 
 const Option = (props) => {
     return (
-        <li>{props.optionText}</li>
+        <li>
+            {props.optionText}
+            <button             
+                onClick={(e)=>{                                 // pass in arrow function called with e arguement
+                    props.handleDeleteOption(props.optionText); // to pass option value up to handleDeleteOption
+                }}
+            >
+                Remove
+            </button>
+        </li>
     );   
 }
 
@@ -193,21 +220,17 @@ class AddOption extends React.Component {
         e.preventDefault();
         const option = e.target.elements.option.value.trim();
         const error = this.props.handleAddOption(option);
-
-        this.setState(()=>{
-            return { error };
-        });
+        this.setState(() => ({ error }));
     }
     render(){
         return (
             <div>
                 {this.state.error && <p>{this.state.error}</p>}
                 <form onSubmit={this.handleAddOption}>
-                    <input type='text' name='option' autoFocus/>
+                    <input type='text' name='option' autoFocus />
                     <button >Add An Option</button>
                 </form>            
             </div>
-
         );
     }
 }
@@ -225,4 +248,4 @@ class AddOption extends React.Component {
 // };
 
 
-ReactDOM.render(<IndecisionApp options={['Jolly Brewer', 'The Railway']}/>, document.getElementById('app'));
+ReactDOM.render(<IndecisionApp />, document.getElementById('app'));
