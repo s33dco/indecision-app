@@ -20,7 +20,7 @@ var IndecisionApp = function (_React$Component) {
         _this.handlePick = _this.handlePick.bind(_this);
         _this.handleAddOption = _this.handleAddOption.bind(_this);
         _this.state = {
-            options: []
+            options: props.options
         };
         return _this;
     }
@@ -60,13 +60,12 @@ var IndecisionApp = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
-            var title = "Indecision";
             var subTitle = "Put you life in the hands of a computer";
 
             return React.createElement(
                 'div',
                 null,
-                React.createElement(Header, { title: title, subTitle: subTitle }),
+                React.createElement(Header, { subTitle: subTitle }),
                 React.createElement(Action, {
                     hasOptions: this.state.options.length > 0,
                     handlePick: this.handlePick
@@ -86,9 +85,11 @@ var IndecisionApp = function (_React$Component) {
     return IndecisionApp;
 }(React.Component);
 
-// stateless functional component
+IndecisionApp.defaultProps = {
+    options: []
+    // stateless functional component
 
-var Header = function Header(props) {
+};var Header = function Header(props) {
     return React.createElement(
         'div',
         null,
@@ -97,7 +98,7 @@ var Header = function Header(props) {
             null,
             props.title
         ),
-        React.createElement(
+        props.subTitle && React.createElement(
             'h2',
             null,
             props.subTitle
@@ -105,21 +106,24 @@ var Header = function Header(props) {
     );
 };
 
-// class based component
-// class Header extends React.Component {
-//     render(){
-//         return (
-//             <div>
-//                 <h1>{this.props.title}</h1>
-//                 <h2>{this.props.subTitle}</h2>
-//             </div>
-//         );
-//     }
-// }
+Header.defaultProps = {
+    title: 'Indecision'
 
-// stateless functional component
+    // class based component
+    // class Header extends React.Component {
+    //     render(){
+    //         return (
+    //             <div>
+    //                 <h1>{this.props.title}</h1>
+    //                 <h2>{this.props.subTitle}</h2>
+    //             </div>
+    //         );
+    //     }
+    // }
 
-var Action = function Action(props) {
+    // stateless functional component
+
+};var Action = function Action(props) {
     return React.createElement(
         'div',
         null,
@@ -281,4 +285,4 @@ var AddOption = function (_React$Component2) {
 // };
 
 
-ReactDOM.render(React.createElement(IndecisionApp, null), document.getElementById('app'));
+ReactDOM.render(React.createElement(IndecisionApp, { options: ['Jolly Brewer', 'The Railway'] }), document.getElementById('app'));
