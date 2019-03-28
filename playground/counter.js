@@ -12,16 +12,12 @@ class Counter extends React.Component {
     // lifecycle methods to persist count on localStorage
 
     componentDidMount(){
-        try{
             const countValue = localStorage.getItem('counter');
-            if(!countValue || isNaN(countValue)){
-                throw ('Invalid counter in localStorage')
-            } else {
+            if(!isNaN(countValue)){
+
                 this.setState(()=>({count : parseInt(countValue)}));
             }
-        } catch(e) {
-            console.log(e)
-        }
+
     }
 
     componentDidUpdate(prevState){
