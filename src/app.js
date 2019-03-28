@@ -1,13 +1,6 @@
-// import './utils.js';
-import anythingIWant, { square, add } from './utils.js'; 
-import defaultFunction, { isAdult, canDrink} from './person.js';
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-console.log('app.js is running');
+const template = <p>this is jsx from webpack</p>;
 
-console.log(square(12));
-console.log(add(12, 12));
-console.log(anythingIWant(100,90)) // anythingIWant is the default export fomr utils, ie subtract
-
-console.log('14 is adult?', isAdult(14));
-console.log('14 is can drink?', canDrink(14));
-console.log('is senior?', defaultFunction(72));
+ReactDOM.render(template, document.getElementById('app'));
