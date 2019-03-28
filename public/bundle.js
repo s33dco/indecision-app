@@ -94,7 +94,7 @@
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utils.js */ \"./src/utils.js\");\n/* harmony import */ var _person_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./person.js */ \"./src/person.js\");\n// import './utils.js';\n \n\n\nconsole.log('app.js is running');\n\nconsole.log(Object(_utils_js__WEBPACK_IMPORTED_MODULE_0__[\"square\"])(12));\nconsole.log(Object(_utils_js__WEBPACK_IMPORTED_MODULE_0__[\"add\"])(12, 12));\n\nconsole.log('14 is adult?', Object(_person_js__WEBPACK_IMPORTED_MODULE_1__[\"isAdult\"])(14));\nconsole.log('14 is can drink?', Object(_person_js__WEBPACK_IMPORTED_MODULE_1__[\"canDrink\"])(14));\n\n//# sourceURL=webpack:///./src/app.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utils.js */ \"./src/utils.js\");\n/* harmony import */ var _person_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./person.js */ \"./src/person.js\");\n// import './utils.js';\n \n\n\nconsole.log('app.js is running');\n\nconsole.log(Object(_utils_js__WEBPACK_IMPORTED_MODULE_0__[\"square\"])(12));\nconsole.log(Object(_utils_js__WEBPACK_IMPORTED_MODULE_0__[\"add\"])(12, 12));\nconsole.log(Object(_utils_js__WEBPACK_IMPORTED_MODULE_0__[\"default\"])(100,90)) // anythingIWant is the default export fomr utils, ie subtract\n\nconsole.log('14 is adult?', Object(_person_js__WEBPACK_IMPORTED_MODULE_1__[\"isAdult\"])(14));\nconsole.log('14 is can drink?', Object(_person_js__WEBPACK_IMPORTED_MODULE_1__[\"canDrink\"])(14));\nconsole.log('is senior?', Object(_person_js__WEBPACK_IMPORTED_MODULE_1__[\"default\"])(72));\n\n//# sourceURL=webpack:///./src/app.js?");
 
 /***/ }),
 
@@ -102,11 +102,11 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _uti
 /*!***********************!*\
   !*** ./src/person.js ***!
   \***********************/
-/*! exports provided: isAdult, canDrink */
+/*! exports provided: default, isAdult, canDrink */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"isAdult\", function() { return isAdult; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"canDrink\", function() { return canDrink; });\nconsole.log('person.js is running');\n\nconst isAdult = (age) => age >= 18;\n\nconst canDrink = (age) => age >= 18;\n\n\n\n//# sourceURL=webpack:///./src/person.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"isAdult\", function() { return isAdult; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"canDrink\", function() { return canDrink; });\nconsole.log('person.js is running');\n\nconst isAdult = (age) => age >= 18;\n\nconst canDrink = (age) => age >= 18;\n\n/* harmony default export */ __webpack_exports__[\"default\"] = ((age) => age >= 65);\n\n\n\n//# sourceURL=webpack:///./src/person.js?");
 
 /***/ }),
 
@@ -114,11 +114,11 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 /*!**********************!*\
   !*** ./src/utils.js ***!
   \**********************/
-/*! exports provided: square, add */
+/*! exports provided: square, add, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"square\", function() { return square; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"add\", function() { return add; });\nconsole.log('utils.js is running');\n\nconst square = (x) => x * x;\nconst add = (a, b) => a + b;\n\n// export {square, add };\n\n//# sourceURL=webpack:///./src/utils.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"square\", function() { return square; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"add\", function() { return add; });\nconsole.log('utils.js is running');\n\nconst square = (x) => x * x;\nconst add = (a, b) => a + b;\n/* harmony default export */ __webpack_exports__[\"default\"] = ((a, b) => a - b);\n\n// const subtract = (a, b) => a - b;\n// export default subtract\n\n// export {square, add, subtract as default};\n\n//# sourceURL=webpack:///./src/utils.js?");
 
 /***/ })
 
