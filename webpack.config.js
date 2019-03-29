@@ -14,7 +14,7 @@ module.exports = {
             exclude: /node_modules/
         }, {
 
-            test : /\.scss$/,
+            test : /\.s?css$/,
             use : [                     // multiple loaders in array
                 'style-loader',
                 'css-loader',
